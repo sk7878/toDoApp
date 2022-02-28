@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+
+
+ <!-- Image and text -->
+        <nav class="navbar navbar-light bg-light">
+          <a class="navbar-brand" href="#">
+            Bootstrap
+          </a>
+        </nav>
+
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <h1 class="text-center">To do list</h1>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    <ol>
+        {% for obj in object_list %}
+            <li> {{obj.title}} - {{obj.detail}} - {{obj.is_done}} -
+                <form action="./update/{{obj.id}}" method="POST" style="display: inline;"> {% csrf_token %}
+                    <input type="submit" value="Done?">
+                </form>
+
+                <form action="./delete/{{obj.id}}" method="POST" style="display: inline;"> {% csrf_token %}
+                    <input type="submit" value="Remove">
+                </form>
+            </li>
+        {% endfor %}
+    </ol>

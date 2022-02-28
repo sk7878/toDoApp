@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <form method="POST"> {% csrf_token %}
+      <div class="form-row w-100 p-3 mb-5">
+        <div class="col-3">
+            {{ form.title }}
+        </div>
+        <div class="col-8">
+            {{ form.detail }}
+        </div>
+          <div class="col">
+            <button type="submit" class="btn btn-primary mb-2">Add</button>
+          </div>
+      </div>
+    </form>
+
+
+    <ul class="list-group list-group-flush">
+        {% for obj in object_list %}
+          <li class="list-group-item list-inline">
+
+              {% if obj.is_done %}
+                <strike style='color:#6c757d'>
+                    {{obj.title}}
+                    <p class="font-weight-light font-italic list-inline-item"><small>
+                        <strike style='color:#6c757d'>  {{obj.detail}} </strike>
+                    </small></p>
+                </strike>
+
+                <div class="float-right">
+                    <form action="#" style="display: inline;">
+                        <button type="submit" class="btn btn-outline-success" disabled>Done!!</button>
+                    </form>
+
+                    <form action="./delete/{{obj.id}}" method="POST" style="display: inline;"> {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-secondary">Remove from list</button>
+                    </form>
+                </div>
+
+              {% else %}
+                {{obj.title}}
+                <small><p class="font-weight-light font-italic list-inline-item"> {{obj.detail}} </p></small>
+
+                <div class="float-right">
+                    <form action="./update/{{obj.id}}" method="POST" style="display: inline;"> {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-success">Done?</button>
+                    </form>
+
+                    <form action="./delete/{{obj.id}}" method="POST" style="display: inline;"> {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-secondary">Remove from list</button>
+                    </form>
+                </div>
+              {% endif %}
+          </li>
+         {% endfor %}
+    </ul>
+
+{% endblock %}
+
